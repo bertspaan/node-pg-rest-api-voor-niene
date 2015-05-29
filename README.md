@@ -1,6 +1,6 @@
 # node-pg-rest-api-voor-niene
 
-Simpele REST API, in Node.js, met [Express](http://expressjs.com/) en [node-postgres](https://github.com/brianc/node-postgres), speciaal voor @NieneB.
+Simpele REST API, in Node.js, met [Express](http://expressjs.com/) en [node-postgres](https://github.com/brianc/node-postgres), speciaal voor [NieneB](https://github.com/NieneB).
 
 ## Installatie
 
