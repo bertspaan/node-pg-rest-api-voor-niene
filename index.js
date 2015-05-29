@@ -5,10 +5,13 @@ var config = require('./config');
 var app = express();
 var pg = require('pg');
 
+app.use(express.static('public'));
+
 var conString = util.format("postgres://%s:%s@%s/%s", config.db.username, config.db.password, config.db.hostname, config.db.database);
 
 var query1 = fs.readFileSync('query1.sql', {encoding: 'utf8'});
 var query2 = fs.readFileSync('query2.sql', {encoding: 'utf8'});
+var query3 = fs.readFileSync('query3.sql', {encoding: 'utf8'});
 
 app.get('/', function (req, res) {
   res.send({
@@ -16,6 +19,8 @@ app.get('/', function (req, res) {
     urls: [
       'http://localhost:3000/query1?aantal=20',
       'http://localhost:3000/query2?string=Hallootjes',
+      'http://localhost:3000/query3',
+      'http://localhost:3000/map.html'
     ]
   });
 });
@@ -36,6 +41,21 @@ app.get('/query2', function (req, res) {
       res.status(500).send(err);
     } else {
       res.send(result.rows);
+    }
+  });
+});
+
+app.get('/query3', function (req, res) {
+  query(query3, null, function(err, result) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.send({
+        type: 'FeatureCollection',
+        features: [
+          JSON.parse(result.rows[0].geojson)
+        ]
+      });
     }
   });
 });
